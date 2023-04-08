@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 //Components
-import Home from "./components/home";
+import Home from "./Pages/home";
 
 //Images
 import logoImg from "./assets/ftontend-logo.png";
