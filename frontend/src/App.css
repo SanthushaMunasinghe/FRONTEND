@@ -25,7 +25,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #8c9bd1;
 }
 
 @keyframes App-logo-spin {
@@ -37,7 +37,28 @@
   }
 }
 
+.navbar-style {
+  background-color: #6c84db;
+}
+
+.navbar-right {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 25px;
+  place-items: center;
+}
+
+.search-bar {
+  height: 40px;
+}
+
 .logo-img {
   width: 75px;
   height: 75px;
+}
+
+.signup-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
