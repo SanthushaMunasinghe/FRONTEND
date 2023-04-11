@@ -1,9 +1,10 @@
 import React from "react";
+import SongDetailsComponent from "../Components/song-details";
 
 function SongPage() {
   return (
     <div>
-      <h1>Song Page</h1>
+      <SongDetailsComponent/>
     </div>
   );
 }
