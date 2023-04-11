@@ -14,3 +14,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
+.play-button, .lyrics-button{
+  border-style: solid;
+  border-width: 2px!important;
+  transition: all 0.2s ease-in-out;
+}
+
+.play-button:hover, .lyrics-button:hover{
+  background-color: white;
+  color: rgba(var(--bs-dark-rgb), 1);
+}
