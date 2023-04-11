@@ -2,8 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 
-//Components
+// Pages
 import Home from "./Pages/home";
+import ChordsLibrary from "./Pages/chords-library-page";
+import SongPage from "./Pages/song-page";
+import SongLyrics from "./Pages/song-lyrics-page";
 
 //Images
 import logoImg from "./assets/ftontend-logo.png";
@@ -68,9 +71,9 @@ function App() {
 
       <Routes>
         <Route exact path="/" Component={Home} />
-        <Route exact path="/chordslibrary" Component={Home} />
-        <Route exact path="/songpage" Component={Home} />
-        <Route exact path="/songlyrics" Component={Home} />
+        <Route exact path="/chordslibrary" Component={ChordsLibrary} />
+        <Route exact path="/songpage" Component={SongPage} />
+        <Route exact path="/songlyrics" Component={SongLyrics} />
       </Routes>
     </Router>
   );
