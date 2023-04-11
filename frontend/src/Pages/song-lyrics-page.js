@@ -8,4 +8,4 @@ function SongLyrics() {
   );
 }
 
-export default Song - Lyrics;
+export default SongLyrics;
