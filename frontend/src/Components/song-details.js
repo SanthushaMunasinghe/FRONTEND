@@ -1,11 +1,16 @@
 import React from "react";
+// import { useState, useEffect } from "react";
+
 import "./song-details.css";
+
+import LyricsComponent from "./lyrics";
 import { FaPlayCircle } from "react-icons/fa";
 import { MdQueueMusic } from "react-icons/md";
+import testThumbnail from "../assets/OIP 1.png";
 
 function SongDetailsComponent() {
   return (
-    <div className="container">
+    <div>
       <div className="album-art"></div>
       <div className="details-bar px-5 py-3 bg-dark">
         <div className="text-white">
@@ -23,6 +28,44 @@ function SongDetailsComponent() {
           </div>
         </div>
       </div>
+      <div className="song-info-grid mt-5">
+        <div>
+          <h5 className="fw-bolder">VIDEO</h5>
+          <div>
+            <a
+              href="https://www.youtube.com/watch?v=B4CcX720DW4"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={testThumbnail}
+                className="thumbnail"
+                alt="Video Thumbnail"
+              />
+            </a>
+          </div>
+        </div>
+        <div>
+          <h5 className="fw-bolder">TRACK INFROMATION</h5>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col">
+                <p className="fw-bolder mb-4">Track</p>
+                <p className="fw-bolder mb-4">Album</p>
+                <p className="fw-bolder mb-4">Label</p>
+                <p className="fw-bolder mb-4">Released</p>
+              </div>
+              <div class="col text-end">
+                <p className="fw-bolder mb-4">Track Name</p>
+                <p className="fw-bolder mb-4">Album Name</p>
+                <p className="fw-bolder mb-4">Label Name</p>
+                <p className="fw-bolder mb-4">Year</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <LyricsComponent />
     </div>
   );
 }

@@ -5,9 +5,6 @@ import "./App.css";
 // Pages
 import Home from "./Pages/home";
 import ChordsLibrary from "./Pages/chords-library-page";
-import SongPage from "./Pages/song-page";
-import SongLyrics from "./Pages/song-lyrics-page";
-
 //Images
 import logoImg from "./assets/ftontend-logo.png";
 import googleImg from "./assets/googleicon.png";
@@ -72,8 +69,6 @@ function App() {
       <Routes>
         <Route exact path="/" Component={Home} />
         <Route exact path="/chordslibrary" Component={ChordsLibrary} />
-        <Route exact path="/songpage" Component={SongPage} />
-        <Route exact path="/songlyrics" Component={SongLyrics} />
       </Routes>
     </Router>
   );
