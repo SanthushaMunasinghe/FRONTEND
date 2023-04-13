@@ -8,14 +8,14 @@ import { FaPlayCircle } from "react-icons/fa";
 import { MdQueueMusic } from "react-icons/md";
 import testThumbnail from "../assets/OIP 1.png";
 
-function SongDetailsComponent() {
+function SongDetailsComponent(props) {
   return (
     <div>
       <div className="album-art"></div>
       <div className="details-bar px-5 py-3 bg-dark">
         <div className="text-white">
-          <h2>Song Name</h2>
-          <h5>Artist Name</h5>
+          <h2>{props.Song}</h2>
+          <h5>{props.Artist}</h5>
         </div>
         <div className="text-white d-flex justify-content-end align-items-center">
           <div className="lyrics-button d-flex px-3 py-2 rounded me-5">
@@ -33,7 +33,7 @@ function SongDetailsComponent() {
           <h5 className="fw-bolder">VIDEO</h5>
           <div>
             <a
-              href="https://www.youtube.com/watch?v=B4CcX720DW4"
+              href={props.VideoLink}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -56,10 +56,10 @@ function SongDetailsComponent() {
                 <p className="fw-bolder mb-4">Released</p>
               </div>
               <div class="col text-end">
-                <p className="fw-bolder mb-4">Track Name</p>
-                <p className="fw-bolder mb-4">Album Name</p>
-                <p className="fw-bolder mb-4">Label Name</p>
-                <p className="fw-bolder mb-4">Year</p>
+                <p className="fw-bolder mb-4">{props.Track}</p>
+                <p className="fw-bolder mb-4">{props.Album}</p>
+                <p className="fw-bolder mb-4">{props.Label}</p>
+                <p className="fw-bolder mb-4">{props.Released}</p>
               </div>
             </div>
           </div>
