@@ -3,6 +3,7 @@ import "./home.css";
 
 import MicRecorder from 'mic-recorder-to-mp3';
 
+
 import RecordComponent from "../Components/record";
 import RecordingComponent from "../Components/recording";
 import RecordFailedComponent from "../Components/recording-failed";
@@ -16,6 +17,7 @@ class Home extends React.Component {
     // const [screenMode, setScreenMode] = useState("start");
     // Audio recorder
     this.recordMode = this.recordMode.bind(this);
+    this.sendRecording = this.sendRecording.bind(this);
 
     this.state = {
       isRecording: false,
@@ -23,14 +25,13 @@ class Home extends React.Component {
       isBlocked: false,
       isRecordClicked: false,
       screenMode: "start",
-      SongDetails: {
-        songName: "Song Name",
-        trackName: "Track Name",
-        artistName: "Artist Name",
-        albumName: "Album Name",
-        label: "Label",
-        releaseYear: "Release Year",
-      },
+      // Response states
+      songName: "Song Name",
+      trackName: "Track Name",
+      artistName: "Artist Name",
+      albumName: "Album Name",
+      label: "Label",
+      releaseYear: "Release Year",
     };
   }
 
@@ -85,12 +86,36 @@ class Home extends React.Component {
   }
   // Change to recording mode
   recordMode(){
-    let record_duration = 15000; // 15 seconds = 15000 miliseconds, Audio record duration
+    let record_duration = 1000; // 15 seconds = 15000 miliseconds, Audio record duration
     this.setState({screenMode: "listening"});
     this.startAudio();
     setTimeout(() => { // Stops Audio record after 15 seconds
-      this.stopAudio();
+      this.stopAudio()
+      this.sendRecording();
     }, record_duration);
+  }
+  // Send file to API
+  sendRecording(){
+    const data = new FormData();
+    data.append("file", this.state.blobURL);
+
+    fetch(`${process.env.JAVA_ENDPOINT_URL}/song`, 
+      {
+        body: data
+      }
+    ).then(res => res.json())
+    .then(json => {
+      this.setState(
+        {
+          songName: json.song,
+          trackName: json.track,
+          artistName: json.artist,
+          albumName: json.album,
+          label: json.label,
+          releaseYear: json.release,
+        }
+      )
+    }).catch(err => console.error('error:' + err));
   }
   
 
