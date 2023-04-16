@@ -39,6 +39,7 @@ function ChordsLibrary() {
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1fr",
             gridGap: "3px",
+            justifyItems: "center",
           }}
         >
           {majorChordUrls.map((url, index) => (
@@ -59,6 +60,7 @@ function ChordsLibrary() {
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1fr",
             gridGap: "3px",
+            justifyItems: "center",
           }}
         >
           {minorChordUrls.map((url, index) => (
@@ -79,6 +81,7 @@ function ChordsLibrary() {
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1fr",
             gridGap: "3px",
+            justifyItems: "center",
           }}
         >
           {seventhChordUrls.map((url, index) => (
