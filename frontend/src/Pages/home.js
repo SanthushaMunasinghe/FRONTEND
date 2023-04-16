@@ -113,14 +113,10 @@ class Home extends React.Component {
     this.setState({screenMode: "loading"});
     const data = new FormData();
     data.append("upload_file", this.state.blob, 'recording.mp3');
-    fetch(`https://shazam-api6.p.rapidapi.com/shazam/recognize/`, 
+    fetch(`http://localhost:9200/song`, 
       {
         body: data,
         method: "POST",
-        headers: {
-          'X-RapidAPI-Key': '69b1c84581msh1fc62c31aa33922p103f62jsnccd9cb5f0e18',
-          'X-RapidAPI-Host': 'shazam-api6.p.rapidapi.com',
-        }
       }
     ).then(
       res => {
