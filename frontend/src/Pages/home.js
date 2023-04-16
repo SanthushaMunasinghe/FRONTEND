@@ -111,7 +111,7 @@ class Home extends React.Component {
     this.setState({screenMode: "loading"});
     const data = new FormData();
     data.append("file", this.state.blobURL);
-    fetch(`${process.env.REACT_APP_JAVA_ENDPOINT_URL}/song`, 
+    fetch(`http://localhost:9200/song`, 
       {
         body: data,
         method: "POST"
