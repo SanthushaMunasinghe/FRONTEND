@@ -12,7 +12,7 @@ import LoadingComponent from "../Components/loading";
 
 class Home extends React.Component {
   Mp3Recorder = new MicRecorder({ bitRate: 128 });
-  
+
   constructor(props) {
     super(props);
     // const [screenMode, setScreenMode] = useState("start");
@@ -45,12 +45,12 @@ class Home extends React.Component {
         {this.state.screenMode==="listening" && <RecordingComponent /> }
         {this.state.screenMode==="loading" && <LoadingComponent /> }
         {this.state.screenMode==="failed" && <RecordFailedComponent retryFunction={this.restartSite} /> }
-        {this.state.screenMode==="successful" && <SongDetailsComponent 
-          Song={this.state.songName} 
+        {this.state.screenMode==="successful" && <SongDetailsComponent
+          Song={this.state.songName}
           Artist={this.state.artistName}
           Track={this.state.trackName}
           Album={this.state.albumName}
-          Label={this.state.label} 
+          Label={this.state.label}
           Released={this.state.releaseYear}
           VideoLink={this.state.videoLink}
           /> }
@@ -71,7 +71,7 @@ class Home extends React.Component {
     );
   }
 
-  
+
   // Start recording audio
   startAudio() {
     if (this.state.isBlocked) {
@@ -93,7 +93,7 @@ class Home extends React.Component {
       const blobURL = URL.createObjectURL(blob)
       this.setState({ blobURL, isRecording: false }, () => {
         console.log(this.state.blobURL);
-      }); 
+      });
     }).catch((e) => console.log(e));
   }
   // Change to recording mode
@@ -111,7 +111,7 @@ class Home extends React.Component {
     this.setState({screenMode: "loading"});
     const data = new FormData();
     data.append("file", this.state.blobURL);
-    fetch(`${process.env.JAVA_ENDPOINT_URL}/song`, 
+    fetch(`${process.env.REACT_APP_JAVA_ENDPOINT_URL}/song`, 
       {
         body: data,
         method: "POST"
