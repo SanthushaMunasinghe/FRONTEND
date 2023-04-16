@@ -24,6 +24,7 @@ class Home extends React.Component {
     this.state = {
       isRecording: false,
       blobURL: '',
+      blob: null,
       isBlocked: false,
       isRecordClicked: false,
       screenMode: "start",
@@ -91,43 +92,54 @@ class Home extends React.Component {
     .getMp3()
     .then(([buffer, blob]) => {
       const blobURL = URL.createObjectURL(blob)
-      this.setState({ blobURL, isRecording: false }, () => {
+      this.setState({ blob, blobURL, isRecording: false }, () => {
         console.log(this.state.blobURL);
+        console.log(this.state.blob);
+        this.sendRecording();
       });
     }).catch((e) => console.log(e));
   }
   // Change to recording mode
   recordMode(){
-    let record_duration = 1000; // 15 seconds = 15000 miliseconds, Audio record duration
+    let record_duration = 15000; // 15 seconds = 15000 miliseconds, Audio record duration
     this.setState({screenMode: "listening"});
     this.startAudio();
-    setTimeout(() => { // Stops Audio record after 15 seconds
-      this.stopAudio()
-      this.sendRecording();
+    setTimeout(async () => { // Stops Audio record after 15 seconds
+      await this.stopAudio()
     }, record_duration);
   }
   // Send file to API
   sendRecording(){
     this.setState({screenMode: "loading"});
     const data = new FormData();
-    data.append("file", this.state.blobURL);
-    fetch(`http://localhost:9200/song`, 
+    data.append("upload_file", this.state.blob, 'recording.mp3');
+    fetch(`https://shazam-api6.p.rapidapi.com/shazam/recognize/`, 
       {
         body: data,
-        method: "POST"
+        method: "POST",
+        headers: {
+          'X-RapidAPI-Key': '69b1c84581msh1fc62c31aa33922p103f62jsnccd9cb5f0e18',
+          'X-RapidAPI-Host': 'shazam-api6.p.rapidapi.com',
+        }
       }
     ).then(
       res => {
-        if(res.status === 200){
+        if(res.status !== 200){
+          throw new Error('Failed to fetch data')
+        }
+        return res.json()
+      }).then(data =>{
+        console.log(data)
+        if(data.status === true){
           // set data
           this.setState(
             {
-              songName: res.json.song,
-              trackName: res.json.track,
-              artistName: res.json.artist,
-              albumName: res.json.album,
-              label: res.json.label,
-              releaseYear: res.json.release,
+              songName: data.result.track.title,
+              trackName: data.result.track.title,
+              artistName: data.result.track.subtitle,
+              albumName: data.result.track.album,
+              label: data.label,
+              releaseYear: data.release,
             }
           )
           // swap component
