@@ -8,6 +8,7 @@ import RecordComponent from "../Components/record";
 import RecordingComponent from "../Components/recording";
 import RecordFailedComponent from "../Components/recording-failed";
 import SongDetailsComponent from "../Components/song-details";
+import LoadingComponent from "../Components/loading";
 
 class Home extends React.Component {
   Mp3Recorder = new MicRecorder({ bitRate: 128 });
@@ -18,6 +19,7 @@ class Home extends React.Component {
     // Audio recorder
     this.recordMode = this.recordMode.bind(this);
     this.sendRecording = this.sendRecording.bind(this);
+    this.restartSite = this.restartSite.bind(this);
 
     this.state = {
       isRecording: false,
@@ -32,6 +34,7 @@ class Home extends React.Component {
       albumName: "Album Name",
       label: "Label",
       releaseYear: "Release Year",
+      videoLink: "link",
     };
   }
 
@@ -40,8 +43,17 @@ class Home extends React.Component {
       <div className="container">
         {this.state.screenMode==="start" && <RecordComponent recordMode={this.recordMode} />}
         {this.state.screenMode==="listening" && <RecordingComponent /> }
-        {this.state.screenMode==="failed" && <RecordFailedComponent /> }
-        {this.state.screenMode==="successful" && <SongDetailsComponent /> }
+        {this.state.screenMode==="loading" && <LoadingComponent /> }
+        {this.state.screenMode==="failed" && <RecordFailedComponent retryFunction={this.restartSite} /> }
+        {this.state.screenMode==="successful" && <SongDetailsComponent 
+          Song={this.state.songName} 
+          Artist={this.state.artistName}
+          Track={this.state.trackName}
+          Album={this.state.albumName}
+          Label={this.state.label} 
+          Released={this.state.releaseYear}
+          VideoLink={this.state.videoLink}
+          /> }
       </div>
     );
   }
@@ -96,28 +108,57 @@ class Home extends React.Component {
   }
   // Send file to API
   sendRecording(){
+    this.setState({screenMode: "loading"});
     const data = new FormData();
     data.append("file", this.state.blobURL);
-
     fetch(`${process.env.JAVA_ENDPOINT_URL}/song`, 
       {
-        body: data
+        body: data,
+        method: "POST"
       }
-    ).then(res => res.json())
-    .then(json => {
-      this.setState(
-        {
-          songName: json.song,
-          trackName: json.track,
-          artistName: json.artist,
-          albumName: json.album,
-          label: json.label,
-          releaseYear: json.release,
+    ).then(
+      res => {
+        if(res.status === 200){
+          // set data
+          this.setState(
+            {
+              songName: res.json.song,
+              trackName: res.json.track,
+              artistName: res.json.artist,
+              albumName: res.json.album,
+              label: res.json.label,
+              releaseYear: res.json.release,
+            }
+          )
+          // swap component
+          this.setState({screenMode: "successful"})
+        } else{
+          this.setState({screenMode: "failed"})
         }
-      )
-    }).catch(err => console.error('error:' + err));
+      }).catch(err => {
+      console.error('error:' + err)
+      this.setState({screenMode: "failed"})
+    });
   }
-  
+  // Restart the site
+  restartSite(){
+    // reset all the states
+    this.setState({
+      isRecording: false,
+      blobURL: '',
+      isBlocked: false,
+      isRecordClicked: false,
+      screenMode: "start",
+      // Response states
+      songName: "Song Name",
+      trackName: "Track Name",
+      artistName: "Artist Name",
+      albumName: "Album Name",
+      label: "Label",
+      releaseYear: "Release Year",
+      videoLink: "link",
+    });
+  }
 
 }
 
