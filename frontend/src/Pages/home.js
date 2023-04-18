@@ -35,7 +35,10 @@ class Home extends React.Component {
       albumName: "Album Name",
       label: "Label",
       releaseYear: "Release Year",
+      imageLink: "Image Link",
       videoLink: "link",
+      videoThumbnail: "Thumbnail",
+      lyrics: null,
     };
   }
 
@@ -53,7 +56,10 @@ class Home extends React.Component {
           Album={this.state.albumName}
           Label={this.state.label}
           Released={this.state.releaseYear}
+          ImageLink={this.state.imageLink}
           VideoLink={this.state.videoLink}
+          VideoThumbnail={this.state.videoThumbnail}
+          Lyrics={this.state.lyrics}
           /> }
       </div>
     );
@@ -113,14 +119,10 @@ class Home extends React.Component {
     this.setState({screenMode: "loading"});
     const data = new FormData();
     data.append("upload_file", this.state.blob, 'recording.mp3');
-    fetch(`https://shazam-api6.p.rapidapi.com/shazam/recognize/`, 
+    fetch(`http://localhost:8080/song`, 
       {
         body: data,
         method: "POST",
-        headers: {
-          'X-RapidAPI-Key': '69b1c84581msh1fc62c31aa33922p103f62jsnccd9cb5f0e18',
-          'X-RapidAPI-Host': 'shazam-api6.p.rapidapi.com',
-        }
       }
     ).then(
       res => {
@@ -137,11 +139,26 @@ class Home extends React.Component {
               songName: data.result.track.title,
               trackName: data.result.track.title,
               artistName: data.result.track.subtitle,
-              albumName: data.result.track.album,
-              label: data.label,
-              releaseYear: data.release,
-            }
-          )
+              albumName: data.result.track.sections[0].metadata[0].text,
+              label: data.result.track.sections[0].metadata[1].text,
+              releaseYear: data.result.track.sections[0].metadata[2].text,
+              imageLink: data.result.track.sections[0].metapages[0].text,
+              lyrics: data.result.track.sections[1].text,
+            })
+            fetch(data.result.track.sections[2].youtubeurl,
+              {
+                headers: {
+                  "origin": "",
+                  "referer": "",
+                  "sec-fetch-dest": "document",
+                  "sec-fetch-mode": "navigate",
+                  "sec-fetch-site": "none",
+        }}).then(vres => {return vres.json()})
+            .then(vdata => {
+              this.setState({
+                videoLink: vdata.image.url, 
+                videoThumbnail: vdata.actions[0].uri})
+            })
           // swap component
           this.setState({screenMode: "successful"})
         } else{
@@ -168,7 +185,10 @@ class Home extends React.Component {
       albumName: "Album Name",
       label: "Label",
       releaseYear: "Release Year",
+      imageLink: "Image Link",
       videoLink: "link",
+      videoThumbnail: "Thumbnail",
+      lyrics: null,
     });
   }
 

@@ -2,12 +2,16 @@
   margin: auto;
   width: 100%;
   height: 400px;
-  background-image: url("../assets/OIP 1.png");
+  /* background-image: url("../assets/OIP 1.png");
   background-size: cover;
   background-position: center center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
 }
-
+.album-art-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .details-bar {
   margin: auto;
   width: 100%;

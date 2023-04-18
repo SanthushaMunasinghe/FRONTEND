@@ -1,5 +1,4 @@
 import React from "react";
-// import { useState, useEffect } from "react";
 
 import "./song-details.css";
 
@@ -11,14 +10,16 @@ import testThumbnail from "../assets/OIP 1.png";
 function SongDetailsComponent(props) {
   return (
     <div>
-      <div className="album-art"></div>
+      <div className="album-art">
+        <img src={props.ImageLink} className="album-art-image" alt="Album Art" loading="lazy"/>
+      </div>
       <div className="details-bar px-5 py-3 bg-dark">
         <div className="text-white">
           <h2>{props.Song}</h2>
           <h5>{props.Artist}</h5>
         </div>
         <div className="text-white d-flex justify-content-end align-items-center">
-          <div className="lyrics-button d-flex px-3 py-2 rounded me-5">
+          <div className="lyrics-button d-flex px-3 py-2 rounded me-5" onClick={() => document.getElementById("lyrics").scrollIntoView({ behavior: "smooth" })}>
             <h2 className="fw-bolder me-2">Lyrics</h2>
             <MdQueueMusic className="fs-1" />
           </div>
@@ -38,7 +39,7 @@ function SongDetailsComponent(props) {
               rel="noopener noreferrer"
             >
               <img
-                src={testThumbnail}
+                src={props.VideoThumbnail}
                 className="thumbnail"
                 alt="Video Thumbnail"
               />
@@ -47,15 +48,15 @@ function SongDetailsComponent(props) {
         </div>
         <div>
           <h5 className="fw-bolder">TRACK INFROMATION</h5>
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
                 <p className="fw-bolder mb-4">Track</p>
                 <p className="fw-bolder mb-4">Album</p>
                 <p className="fw-bolder mb-4">Label</p>
                 <p className="fw-bolder mb-4">Released</p>
               </div>
-              <div class="col text-end">
+              <div className="col text-end">
                 <p className="fw-bolder mb-4">{props.Track}</p>
                 <p className="fw-bolder mb-4">{props.Album}</p>
                 <p className="fw-bolder mb-4">{props.Label}</p>
@@ -65,7 +66,7 @@ function SongDetailsComponent(props) {
           </div>
         </div>
       </div>
-      <LyricsComponent />
+      <LyricsComponent Lyrics={props.Lyrics} />
     </div>
   );
 }
