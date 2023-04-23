@@ -11,7 +11,7 @@ function SongDetailsComponent(props) {
   return (
     <div>
       <div className="album-art">
-        <img src={props.ImageLink} className="album-art-image" alt="Album Art" loading="lazy"/>
+        <img data-src={props.ImageLink} className="album-art-image" alt="Album Art" loading="lazy"/>
       </div>
       <div className="details-bar px-5 py-3 bg-dark">
         <div className="text-white">

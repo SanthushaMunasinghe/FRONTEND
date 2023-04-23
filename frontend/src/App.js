@@ -7,7 +7,6 @@ import Home from "./Pages/home";
 import ChordsLibrary from "./Pages/chords-library-page";
 //Images
 import logoImg from "./assets/ftontend-logo.png";
-import googleImg from "./assets/googleicon.png";
 
 function App() {
   return (
@@ -52,13 +51,6 @@ function App() {
                       Search
                     </button>
                   </form>
-                  <button className="btn btn-white bg-white rounded-pill">
-                    <img
-                      src={googleImg}
-                      alt="signUp"
-                      className="signup-icon"
-                    ></img>
-                  </button>
                 </div>
               </div>
             </div>

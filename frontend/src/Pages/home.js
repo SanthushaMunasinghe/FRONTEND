@@ -35,7 +35,7 @@ class Home extends React.Component {
       albumName: "Album Name",
       label: "Label",
       releaseYear: "Release Year",
-      imageLink: "Image Link",
+      imageLink: "ImageLink.png",
       videoLink: "link",
       videoThumbnail: "Thumbnail",
       lyrics: null,
@@ -142,25 +142,17 @@ class Home extends React.Component {
               albumName: data.result.track.sections[0].metadata[0].text,
               label: data.result.track.sections[0].metadata[1].text,
               releaseYear: data.result.track.sections[0].metadata[2].text,
-              imageLink: data.result.track.sections[0].metapages[0].text,
+              imageLink: data.result.track.sections[0].metapages[1].image,
               lyrics: data.result.track.sections[1].text,
-            })
-            fetch(data.result.track.sections[2].youtubeurl,
-              {
-                headers: {
-                  "origin": "",
-                  "referer": "",
-                  "sec-fetch-dest": "document",
-                  "sec-fetch-mode": "navigate",
-                  "sec-fetch-site": "none",
-        }}).then(vres => {return vres.json()})
-            .then(vdata => {
-              this.setState({
-                videoLink: vdata.image.url, 
-                videoThumbnail: vdata.actions[0].uri})
-            })
-          // swap component
-          this.setState({screenMode: "successful"})
+            }, ()=>{
+              // swap component
+              this.setState({screenMode: "successful"}, () => {
+                console.log(this.state.imageLink);
+                console.log(this.state.artistName);
+                document.getElementsByClassName("album-art-image")[0].src = this.state.imageLink;
+              })
+            }
+            )
         } else{
           this.setState({screenMode: "failed"})
         }
