@@ -32,16 +32,18 @@ function SongDetailsComponent(props) {
       <div className="song-info-grid mt-5">
         <div>
           <h5 className="fw-bolder">VIDEO</h5>
-          <div>
+          <div className="video-thumbnail-container">
             <a
               href={props.VideoLink}
               target="_blank"
+              className="video-link"
               rel="noopener noreferrer"
             >
               <img
-                src={props.VideoThumbnail}
-                className="thumbnail"
+                data-src={props.VideoThumbnail}
+                className="video-thumbnail"
                 alt="Video Thumbnail"
+                loading="lazy"
               />
             </a>
           </div>
@@ -66,7 +68,7 @@ function SongDetailsComponent(props) {
           </div>
         </div>
       </div>
-      <LyricsComponent Lyrics={props.Lyrics} />
+      { props.Lyrics && <LyricsComponent Lyrics={props.Lyrics} />}
     </div>
   );
 }

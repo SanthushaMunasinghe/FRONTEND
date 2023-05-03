@@ -131,25 +131,28 @@ class Home extends React.Component {
         }
         return res.json()
       }).then(data =>{
-        console.log(Object.keys(data.matches).length)
-        if(Object.keys(data.matches).length !== 0){
+        if(data.status === "success"){
           // set data
           this.setState(
             {
-              songName: data.track.title,
-              trackName: data.track.title,
-              artistName: data.track.subtitle,
-              albumName: data.track.sections[0].metadata[0].text,
-              label: data.track.sections[0].metadata[1].text,
-              releaseYear: data.track.sections[0].metadata[2].text,
-              imageLink: data.track.sections[0].metapages[1].image,
-              lyrics: data.track.sections[1].text,
+              songName: data.song_name,
+              trackName: data.song_name,
+              artistName: data.artist,
+              albumName: data.album,
+              label: data.label,
+              releaseYear: data.release_year,
+              imageLink: data.img_link,
+              lyrics: data.lyrics,
+              videoLink: data.vid_link,
+              videoThumbnail: data.vid_thumbnail,
             }, ()=>{
               // swap component
               this.setState({screenMode: "successful"}, () => {
                 console.log(this.state.imageLink);
                 console.log(this.state.artistName);
                 document.getElementsByClassName("album-art-image")[0].src = this.state.imageLink;
+                document.getElementsByClassName("video-thumbnail")[0].src = this.state.videoThumbnail;
+                document.getElementsByClassName("video-link")[0].href = this.state.videoLink;
               })
             }
             )
