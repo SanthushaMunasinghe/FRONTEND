@@ -131,19 +131,19 @@ class Home extends React.Component {
         }
         return res.json()
       }).then(data =>{
-        console.log(data)
-        if(data.status === true){
+        console.log(Object.keys(data.matches).length)
+        if(Object.keys(data.matches).length !== 0){
           // set data
           this.setState(
             {
-              songName: data.result.track.title,
-              trackName: data.result.track.title,
-              artistName: data.result.track.subtitle,
-              albumName: data.result.track.sections[0].metadata[0].text,
-              label: data.result.track.sections[0].metadata[1].text,
-              releaseYear: data.result.track.sections[0].metadata[2].text,
-              imageLink: data.result.track.sections[0].metapages[1].image,
-              lyrics: data.result.track.sections[1].text,
+              songName: data.track.title,
+              trackName: data.track.title,
+              artistName: data.track.subtitle,
+              albumName: data.track.sections[0].metadata[0].text,
+              label: data.track.sections[0].metadata[1].text,
+              releaseYear: data.track.sections[0].metadata[2].text,
+              imageLink: data.track.sections[0].metapages[1].image,
+              lyrics: data.track.sections[1].text,
             }, ()=>{
               // swap component
               this.setState({screenMode: "successful"}, () => {
