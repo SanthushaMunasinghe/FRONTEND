@@ -1,28 +1,60 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, redirect } from "react-router-dom";
 import "./App.css";
 
 // Pages
 import Home from "./Pages/home";
 import ChordsLibrary from "./Pages/chords-library-page";
+import Search from "./Pages/search";
 //Images
 import logoImg from "./assets/ftontend-logo.png";
 import { render } from "@testing-library/react";
 
+import { FaSpinner } from "react-icons/fa";
+
 class App extends React.Component {
+  
   constructor(props) {
     super(props);
 
     this.state = {
       searchText: "",
+      searchStatus: "",
+      searchData: [],
+      searchSelection: "",
     };
-
+    
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  
   handleSearch(event) {
     this.setState({searchText: event.target.value});
-  }
+    if (event.target.value.length > 0) {
+        let searchTimeout = setTimeout(() => {
+          this.setState({searchStatus: "loading"});
+          const data = new FormData();
+          data.append("searchKey", event.target.value);
+          fetch(`http://localhost:8080/findSong`, 
+            {
+              body: data,
+              method: "POST",
+            }
+          ).then(
+            res => {
+              if(res.status !== 200){
+                throw new Error('Failed to fetch data')
+              }
+              return res.json()
+            }).then(data =>{
+              this.setState({searchStatus: "success", searchData: data});
+            }).catch(err => {
+            console.error('error:' + err);
+            this.setState({searchStatus: "error"});
+          });
+        }, 1000);
+      }
+    }
 
   render(){
     return (
@@ -64,14 +96,21 @@ class App extends React.Component {
                         aria-label="Search"
                         value={this.state.searchText}
                         onChange={this.handleSearch}
+                        onBlur={() => {this.setState({searchStatus: ""})}}
                       />
-                      <button className="btn btn-dark" type="submit">
-                        Search
+                      <button className="btn btn-dark search-btn" type="submit">
+                        {this.state.searchStatus==="loading"?<span className="spinner"><FaSpinner/></span>:"Search"}
                       </button>
                     </form>
                     {
-                    this.state.searchText.length > 0 && 
+                    (this.state.searchStatus === "success") && 
                     <div className="search-dropdown">
+                      {this.state.searchData.slice(0, 5).map((item, index) =>{
+                          <div className="search-dropdown-item" key={index} onClick={() => {this.setState({searchSelection: this.state.searchData[index]}, () => {return redirect("/search");})}}>
+                            <h1>{item.title}</h1>
+                            <p>{item.artist}</p>
+                          </div>
+                      })}
                     </div>
                     }
                   </div>
@@ -84,6 +123,7 @@ class App extends React.Component {
         <Routes>
           <Route exact path="/" Component={Home} />
           <Route exact path="/chordslibrary" Component={ChordsLibrary} />
+          <Route exact path="/search" element={<Search details={this.state.searchSelection}/>}/>
         </Routes>
       </Router>
     );
