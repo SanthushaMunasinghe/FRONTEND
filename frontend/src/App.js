@@ -53,7 +53,7 @@ class App extends React.Component {
               }
               return res.json()
             }).then(data =>{
-              this.setState({searchStatus: "success", searchData: data});
+              this.setState({searchStatus: "success", searchData: data}, () => console.log(this.state.searchData.slice(0, 5)));
             }).catch(err => {
             console.error('error:' + err);
             this.setState({searchStatus: "error"});
