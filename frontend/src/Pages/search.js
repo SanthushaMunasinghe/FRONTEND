@@ -7,22 +7,24 @@ import LyricsComponent from "../Components/lyrics";
 
 function Search(props) {
   let chordList = props.details.chords.split(" ");
+  let MajchordImgs, MinchordImgs, SevenchordImgs;
+  let majorChordUrls, minorChordUrls, seventhChordUrls;
 
   for(let chord of chordList){
     if(chord.substring(chord.length - 1)==="m"){
-      const MinchordImgs = require.context(
+      MinchordImgs = require.context(
         "../assets/chords-Images/Minor",
         false,
         `/^${chord}\.(png|jpe?g|svg)$/`
       );
     } else if(chord.substring(chord.length - 1)==="7"){
-      const SevenchordImgs = require.context(
+      SevenchordImgs = require.context(
         "../assets/chords-Images/7th",
         false,
         `/^${chord}\.(png|jpe?g|svg)$/`
       );
     } else {
-      const MajchordImgs = require.context(
+      MajchordImgs = require.context(
         "../assets/chords-Images/Major",
         false,
         `/^${chord}\.(png|jpe?g|svg)$/`
