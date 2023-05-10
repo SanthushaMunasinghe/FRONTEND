@@ -13,7 +13,7 @@ import { render } from "@testing-library/react";
 import { FaSpinner } from "react-icons/fa";
 
 class App extends React.Component {
-  
+
   constructor(props) {
     super(props);
 
@@ -23,21 +23,23 @@ class App extends React.Component {
       searchData: [],
       searchSelection: "",
     };
-    
+
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  
+
   handleSearch(event) {
     this.setState({searchText: event.target.value});
     if (event.target.value.length > 0) {
         let searchTimeout = setTimeout(() => {
           this.setState({searchStatus: "loading"});
-          const data = new FormData();
-          data.append("searchKey", event.target.value);
-          fetch(`http://localhost:8080/findSong`, 
+          // const data = new FormData();
+          // data.append("searchKey", event.target.value);
+          fetch(`http://localhost:8080/findSong`,
             {
-              body: data,
+              body: {
+                "searchKey": event.target.value,
+              },
               method: "POST",
             }
           ).then(
@@ -103,7 +105,7 @@ class App extends React.Component {
                       </button>
                     </form>
                     {
-                    (this.state.searchStatus === "success") && 
+                    (this.state.searchStatus === "success") &&
                     <div className="search-dropdown">
                       {this.state.searchData.slice(0, 5).map((item, index) =>{
                           <div className="search-dropdown-item" key={index} onClick={() => {this.setState({searchSelection: this.state.searchData[index]}, () => {return redirect("/search");})}}>
@@ -119,7 +121,7 @@ class App extends React.Component {
             </nav>
           </div>
         </div>
-  
+
         <Routes>
           <Route exact path="/" Component={Home} />
           <Route exact path="/chordslibrary" Component={ChordsLibrary} />
