@@ -6,7 +6,7 @@ import handImg from "../assets/HAND.png";
 import LyricsComponent from "../Components/lyrics";
 
 function Search(props) {
-  let chordList = props.details.chords.split(" ");
+  let chordList = props.details.Chords.split(" ");
   let MajchordImgs, MinchordImgs, SevenchordImgs;
   let majorChordUrls, minorChordUrls, seventhChordUrls;
 
@@ -78,7 +78,7 @@ function Search(props) {
           ))}
         </div>
       </div>
-      { props.details.lyrics && <LyricsComponent Lyrics={props.details.lyrics} />}
+      { props.details.Lyrics && <LyricsComponent Lyrics={props.details.Lyrics} />}
     </div>
   );
 }
