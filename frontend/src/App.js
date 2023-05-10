@@ -41,7 +41,12 @@ class App extends React.Component {
           fetch(`http://localhost:8080/findSong`,
             {
               body: JSON.stringify(data),
-              method: "POST",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                }
+              }
             }
           ).then(
             res => {
