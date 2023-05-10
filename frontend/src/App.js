@@ -35,11 +35,12 @@ class App extends React.Component {
           this.setState({searchStatus: "loading"});
           // const data = new FormData();
           // data.append("searchKey", event.target.value);
+          const data ={
+            "searchKey": event.target.value,
+          };
           fetch(`http://localhost:8080/findSong`,
             {
-              body: {
-                "searchKey": event.target.value,
-              },
+              body: JSON.stringify(data),
               method: "POST",
             }
           ).then(
