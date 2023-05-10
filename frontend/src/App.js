@@ -55,8 +55,7 @@ class App extends React.Component {
             }).then(data =>{
               this.setState({searchStatus: "success", searchData: data}, () => console.log(this.state.searchData && this.state.searchData.slice(0, 5).map((item, index) =>
                   <div className="search-dropdown-item" key={index} onClick={() => {this.setState({searchSelection: this.state.searchData[index]}, () => {return redirect("/search");})}}>
-                    <h1>{item["Song Title"]}</h1>
-                    <p>{item["Song Artist"]}</p>
+                    <h1>{item}</h1>
                   </div>
               )));
             }).catch(err => {
@@ -118,7 +117,7 @@ class App extends React.Component {
                     <div className="search-dropdown">
                       {this.state.searchData && this.state.searchData.slice(0, 5).map((item, index) =>
                           <div className="search-dropdown-item" key={index} onClick={() => {this.setState({searchSelection: this.state.searchData[index]}, () => {return redirect("/search");})}}>
-                            <h1>{item["Song Title"]}</h1>
+                            <h1>{item}</h1>
                             <p>{item["Song Artist"]}</p>
                           </div>
                       )}
