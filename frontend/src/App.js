@@ -116,12 +116,12 @@ class App extends React.Component {
                     {
                     (this.state.searchStatus === "success") &&
                     <div className="search-dropdown">
-                      {this.state.searchData && this.state.searchData.slice(0, 5).map((item, index) =>{
+                      {this.state.searchData && this.state.searchData.slice(0, 5).map((item, index) =>
                           <div className="search-dropdown-item" key={index} onClick={() => {this.setState({searchSelection: this.state.searchData[index]}, () => {return redirect("/search");})}}>
                             <h1>{item.title}</h1>
                             <p>{item.artist}</p>
                           </div>
-                      })}
+                      )}
                     </div>
                     }
                   </div>
